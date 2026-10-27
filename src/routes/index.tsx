@@ -120,9 +120,6 @@ function QuickVet() {
         >
           Start the check
         </button>
-        <p className="text-center text-xs text-muted-foreground">
-          Your tester ID: {typeof window === "undefined" ? "" : ""}
-        </p>
       </div>
     );
   }
