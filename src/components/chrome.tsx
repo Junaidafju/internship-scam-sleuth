@@ -74,12 +74,7 @@ export function TabBar() {
               </Link>
             );
           })}
-        </div>
-        <div className="border-t border-border/60 pb-1.5 pt-1 text-center">
-          <Link to="/admin" className="text-[10px] font-medium text-muted-foreground underline underline-offset-2">
-            Admin
-          </Link>
-        </div>
+      </div>
       </div>
     </nav>
   );
