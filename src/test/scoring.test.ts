@@ -8,7 +8,7 @@ const allNo = (): RunAnswers => Object.fromEntries(DEFAULT_REDFLAGS.map((f) => [
 describe("Quick-Vet scoring", () => {
   it("any dealbreaker Yes gives Likely scam", () => {
     const a = allNo();
-    a.D2 = "yes";
+    a["D2"] = "yes";
     expect(scoreRun(DEFAULT_REDFLAGS, a).verdict).toBe("Likely scam");
   });
 
@@ -22,8 +22,8 @@ describe("Quick-Vet scoring", () => {
 
   it("three weight-2 warnings plus three Not sure on checks gives Be careful", () => {
     const a = allNo();
-    a.W2 = a.W3 = a.W4 = "yes";
-    a.C1 = a.C2 = a.C3 = "unsure";
+    a["W2"] = a["W3"] = a["W4"] = "yes";
+    a["C1"] = a["C2"] = a["C3"] = "unsure";
     const s = scoreRun(DEFAULT_REDFLAGS, a);
     expect(s.risk).toBe(6);
     expect(s.verdict).toBe("Be careful");
@@ -31,8 +31,8 @@ describe("Quick-Vet scoring", () => {
 
   it("risk 4-7 is Be careful", () => {
     const a = allNo();
-    a.W2 = a.W3 = "yes";
-    a.W5 = "unsure";
+    a["W2"] = a["W3"] = "yes";
+    a["W5"] = "unsure";
     expect(scoreRun(DEFAULT_REDFLAGS, a).verdict).toBe("Be careful");
   });
 
