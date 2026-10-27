@@ -125,7 +125,7 @@ function QuickVet() {
   }
 
   if (stage === "questions" && current) {
-    const badge = TIER_BADGE[current.tier];
+    const badge = TIER_BADGE[current.tier] ?? { label: current.tier, className: "" };
     return (
       <div className="space-y-5">
         <div>
