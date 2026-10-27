@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExperiencesRouteImport } from './routes/experiences'
+import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as VerifyRouteImport } from './routes/verify'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExperiencesRoute = ExperiencesRouteImport.update({
+  id: '/experiences',
+  path: '/experiences',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyRoute = VerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/experiences': typeof ExperiencesRoute
+  '/feedback': typeof FeedbackRoute
+  '/verify': typeof VerifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/experiences': typeof ExperiencesRoute
+  '/feedback': typeof FeedbackRoute
+  '/verify': typeof VerifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/experiences': typeof ExperiencesRoute
+  '/feedback': typeof FeedbackRoute
+  '/verify': typeof VerifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/experiences' | '/feedback' | '/verify'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/experiences' | '/feedback' | '/verify'
+  id: '__root__' | '/' | '/experiences' | '/feedback' | '/verify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExperiencesRoute: typeof ExperiencesRoute
+  FeedbackRoute: typeof FeedbackRoute
+  VerifyRoute: typeof VerifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/experiences': {
+      id: '/experiences'
+      path: '/experiences'
+      fullPath: '/experiences'
+      preLoaderRoute: typeof ExperiencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify': {
+      id: '/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof VerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExperiencesRoute: ExperiencesRoute,
+  FeedbackRoute: FeedbackRoute,
+  VerifyRoute: VerifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
