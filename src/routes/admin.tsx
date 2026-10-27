@@ -120,11 +120,25 @@ function Admin() {
 
   const cols = COLUMNS[type];
 
+  if (!authed) return <LoginScreen onOk={() => setAuthed(true)} />;
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Admin</h1>
-        <StatusChip state={sync} />
+        <div className="flex items-center gap-2">
+          <StatusChip state={sync} />
+          <button
+            onClick={() => {
+              window.localStorage.removeItem(AUTH_KEY);
+              setAuthed(false);
+              void navigate({ to: "/" });
+            }}
+            className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground"
+          >
+            Sign out
+          </button>
+        </div>
       </div>
 
       <section className="space-y-2 rounded-2xl border border-border bg-card p-4">
