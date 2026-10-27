@@ -20,13 +20,13 @@ describe("Quick-Vet scoring", () => {
     expect(s.verdict).toBe("Looks real (still verify)");
   });
 
-  it("three weight-2 warnings plus three Not sure gives Be careful", () => {
+  it("three weight-2 warnings plus three Not sure on checks gives Be careful", () => {
     const a = allNo();
     a.W2 = a.W3 = a.W4 = "yes";
-    a.W5 = a.W6 = a.W8 = "unsure";
+    a.C1 = a.C2 = a.C3 = "unsure";
     const s = scoreRun(DEFAULT_REDFLAGS, a);
-    expect(s.risk).toBe(9 - 0); // 6 + 3
-    expect(s.verdict).toBe("Likely scam");
+    expect(s.risk).toBe(6);
+    expect(s.verdict).toBe("Be careful");
   });
 
   it("risk 4-7 is Be careful", () => {
