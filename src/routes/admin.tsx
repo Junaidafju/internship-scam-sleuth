@@ -90,6 +90,7 @@ function Admin() {
   const sync = useSyncStatus();
 
   useEffect(() => {
+    setAuthed(readAuthed());
     setFlags(getFlags());
     setUrl(getSheetUrl());
   }, []);
