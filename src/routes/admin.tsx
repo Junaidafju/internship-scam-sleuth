@@ -38,7 +38,50 @@ export const Route = createFileRoute("/admin")({
 const input =
   "w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring";
 
+const ADMIN_USER = "abdkadir2006@gmail.com";
+const ADMIN_PASS = "Abdul@123";
+const AUTH_KEY = "rog_admin_ok";
+
+function readAuthed(): boolean {
+  try {
+    return window.localStorage.getItem(AUTH_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function LoginScreen({ onOk }: { onOk: () => void }) {
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
+  const [error, setError] = useState("");
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (user.trim().toLowerCase() === ADMIN_USER && pass === ADMIN_PASS) {
+      window.localStorage.setItem(AUTH_KEY, "1");
+      onOk();
+    } else {
+      setError("Wrong user ID or password.");
+    }
+  }
+
+  return (
+    <form onSubmit={submit} className="space-y-3 rounded-2xl border border-border bg-card p-4">
+      <h1 className="text-2xl font-bold">Admin login</h1>
+      <p className="text-xs text-muted-foreground">Only the project admin can open this page.</p>
+      <input value={user} onChange={(e) => setUser(e.target.value)} placeholder="User ID" autoComplete="username" className={input} />
+      <input value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Password" type="password" autoComplete="current-password" className={input} />
+      {error && <p className="text-xs font-medium text-destructive">{error}</p>}
+      <button type="submit" className="w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-primary-foreground">
+        Sign in
+      </button>
+    </form>
+  );
+}
+
 function Admin() {
+  const navigate = useNavigate();
+  const [authed, setAuthed] = useState(false);
   const [type, setType] = useState<RecordType>("checks");
   const [records, setRecords] = useState<SavedRecord[]>([]);
   const [flags, setFlags] = useState<RedFlag[]>([]);
